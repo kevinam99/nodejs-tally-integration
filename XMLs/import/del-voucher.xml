@@ -1,0 +1,14 @@
+<ENVELOPE>
+    <HEADER>
+        <VERSION>1</VERSION>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+        <ID>Vouchers</ID>
+    </HEADER>
+    <BODY>
+        <DATA>
+            <TALLYMESSAGE>
+                
+            </TALLYMESSAGE>
+        </DATA>
+    </BODY>
+</ENVELOPE>

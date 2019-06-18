@@ -1,0 +1,36 @@
+<ENVELOPE>
+    <HEADER>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+        <IMPORTDATA>
+            <REQUESTDESC>
+                <REPORTNAME>All Masters</REPORTNAME>
+            </REQUESTDESC>
+            <REQUESTDATA>
+
+              <!-- Create Ledger named "CASH" -->
+                <TALLYMESSAGE xmlns:UDF="TallyUDF">
+                    <LEDGER NAME="CASH" ACTION="Create">
+                        <NAME.LIST>
+                            <NAME>CASH</NAME>
+                        </NAME.LIST>
+                        <PARENT>Cash-in-hand</PARENT>
+                        <ISBILLWISEON>No</ISBILLWISEON>
+                        <AFFECTSSTOCK>No</AFFECTSSTOCK>
+                        <OPENINGBALANCE>0</OPENINGBALANCE>
+                        <USEFORVAT>No </USEFORVAT>
+                        <TAXCLASSIFICATIONNAME/>
+                        <TAXTYPE/>
+                        <RATEOFTAXCALCULATION/>
+                    </LEDGER>
+                </TALLYMESSAGE>
+
+                <!-- Create Sales Voucher -->
+                <TALLYMESSAGE xmlns:UDF="TallyUDF">
+                    <VOUCHER REMOTEID="6593251k-803u-731g-953p-597825398422-I0000001" VCHTYPE="Sales" ACTION="Create">
+                        <ISOPTIONAL>No</ISOPTIONAL>
+                        <USEFORGAINLOSS>No</USEFORGAINLOSS>
+                        <USEFORCOMPOUND>No</USEFORCOMPOUND>
+                        <VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>
+                        <DATE>20190401</DATE>

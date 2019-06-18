@@ -1,0 +1,22 @@
+<!--XML tags to delete the Group "My Debtors Name" -->
+<ENVELOPE>
+    <HEADER>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+        <IMPORTDATA>
+            <REQUESTDESC>
+                <REPORTNAME>All Masters</REPORTNAME>
+            </REQUESTDESC>
+            <REQUESTDATA>
+                <TALLYMESSAGE xmlns:UDF="TallyUDF">
+                    <GROUP NAME="My Debtors Name" ACTION="Delete">
+                        <NAME.LIST>
+                            <NAME>My Debtors Name</NAME>
+                        </NAME.LIST>
+                    </GROUP>
+                </TALLYMESSAGE>
+            </REQUESTDATA>
+        </IMPORTDATA>
+    </BODY>
+</ENVELOPE>

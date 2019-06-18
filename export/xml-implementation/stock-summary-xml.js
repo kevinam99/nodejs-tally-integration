@@ -55,8 +55,9 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
-  writeStream.write("------Items---------------------------------Incoming---------------------------------------------------------------------------------------------------Outgoing--------------------------------------------\r\n");
-  writeStream.write("\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value      --------------Remaining-------------------\r\n");
+  writeStream.write("------Items--------         ------------------Incoming---------------------------                                  ----------------Outgoing-------------------      --------------Remaining-------------------\r\n");
+  writeStream.write("\r\n");
+  writeStream.write("\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n");
   writeStream.write(body);
 
   //writeStream.write("Thank You.");

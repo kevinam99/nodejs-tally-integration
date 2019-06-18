@@ -17,7 +17,7 @@ var options = { method: 'POST',
                 '           <REPORTNAME>List of Accounts</REPORTNAME>	'+
                 '           <STATICVARIABLES>'+
                    '                 <EXPLODEFLAG>Yes</EXPLODEFLAG>'+
-                    '               <SVEXPORTFORMAT>$$SysName:XML</SVEXPORTFORMAT>'+
+                    '               <SVEXPORTFORMAT>$$SysName:SDF</SVEXPORTFORMAT>'+
                     '               <ACCOUNTTYPE>All Inventory Masters</ACCOUNTTYPE> '+
                 '           </STATICVARIABLES>'+
             '           </REQUESTDESC>'+

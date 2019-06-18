@@ -1,5 +1,5 @@
 var request = require("request");
-
+var fs = require("fs");
 var options = { method: 'POST',
   url: 'http://localhost:9002',
   headers: 
@@ -19,10 +19,46 @@ var options = { method: 'POST',
   '         <EXPORTDATA>'+
   '             <REQUESTDESC>'+
   '                 <STATICVARIABLES>'+
-  '<!-- Expand ALL levels in detailed format = Yes or No-->\r\n          <EXPLODEALLLEVELS>yes</EXPLODEALLLEVELS>\r\n\r\n          <!-- Format = Detailed or Condensed -->\r\n          <!-- Yes means Detailed -->\r\n          <!-- No means Condensed -->\r\n          <EXPLODEFLAG>no</EXPLODEFLAG>\r\n\r\n          <!-- Show ALL Accts (incl Empty A/cs) = Yes or No-->\r\n          <DSPSHOWALLACCOUNTS>No</DSPSHOWALLACCOUNTS>\r\n\r\n          <!-- Show Opening balances = Yes or No -->\r\n          <DSPSHOWOPENING>Yes</DSPSHOWOPENING>\r\n          \r\n          <!-- Show goods inwards = Yes or No -->\r\n          <DSPSHOWINWARDS>YES</DSPSHOWINWARDS>\r\n          <!-- Show goods outwards = Yes or No-->\r\n          <DSPSHOWOUTWARDS>YES</DSPSHOWOUTWARDS>\r\n          <!-- Show Closing balances = Yes or No -->\r\n          <DSPSHOWCLOSING>Yes</DSPSHOWCLOSING>\r\n\r\n          <!--Method of Information = Grouped or Item-wise-->\r\n          <!-- Yes means Grouped-->\r\n          <!-- No means Item-wise -->\r\n          <ISITEMWISE>yes</ISITEMWISE>\r\n\r\n        </STATICVARIABLES>\r\n        <REPORTNAME>Stock Summary</REPORTNAME>\r\n      </REQUESTDESC>\r\n    </EXPORTDATA>\r\n  </BODY>\r\n</ENVELOPE>\r\n' };
+  '                     <!-- Expand ALL levels in detailed format = Yes or No-->'+
+  '                     <EXPLODEALLLEVELS>yes</EXPLODEALLLEVELS>'+
+  '                     <!-- Format = Detailed or Condensed -->'+
+  '                     <!-- Yes means Detailed -->'+
+  '                     <!-- No means Condensed -->'+
+  '                     <EXPLODEFLAG>no</EXPLODEFLAG>'+
+  '                     <!-- Show ALL Accts (incl Empty A/cs) = Yes or No-->'+
+  '                     <DSPSHOWALLACCOUNTS>No</DSPSHOWALLACCOUNTS>'+
+  '                     <!-- Show Opening balances = Yes or No -->'+
+  '                     <DSPSHOWOPENING>Yes</DSPSHOWOPENING>'+
+  '                     <!-- Show goods inwards = Yes or No -->'+
+  '                     <DSPSHOWINWARDS>YES</DSPSHOWINWARDS>'+
+  '                     <!-- Show goods outwards = Yes or No-->'+
+  '                     <DSPSHOWOUTWARDS>YES</DSPSHOWOUTWARDS>'+
+  '                     <!-- Show Closing balances = Yes or No -->'+
+  '                     <DSPSHOWCLOSING>Yes</DSPSHOWCLOSING>'+
+  '                     <SVEXPORTFORMAT>$$SysName:SDF</SVEXPORTFORMAT>'+
+  '                     <!--Method of Information = Grouped or Item-wise-->'+
+  '                     <!-- Yes means Grouped-->'+
+  '                     <!-- No means Item-wise -->'+
+  '                     <ISITEMWISE>yes</ISITEMWISE>'+
+  '                     <SVEXPORTFORMAT>$$SysName:SDF</SVEXPORTFORMAT>'+
+  '                 </STATICVARIABLES>'+
+  '                 <REPORTNAME>Stock Summary</REPORTNAME>'+
+  '             </REQUESTDESC>'+
+  '         </EXPORTDATA>'+
+  '     </BODY>'+
+  ' </ENVELOPE>' };
+
+    var writeStream = fs.createWriteStream("Stock-summary-new.txt");
+    
 
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
+  writeStream.write("------Items---------------------------------Incoming---------------------------------------------------------------------------------------------------Outgoing--------------------------------------------\r\n");
+  writeStream.write("\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value      --------------Remaining-------------------\r\n");
+  writeStream.write(body);
+
+  //writeStream.write("Thank You.");
+  writeStream.end();
 });

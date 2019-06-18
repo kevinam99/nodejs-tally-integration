@@ -4,4 +4,4 @@ testprogs/*
 *.pdf
 *.exe
 app.js
-Work.txt
+*.txt

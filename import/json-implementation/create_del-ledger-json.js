@@ -58,7 +58,7 @@ function setProperties(action, company, ledgerName, state, openingBalance, paren
     
 
     var json = convert.xml2json(xml_body, {compact: true, spaces: 4});
-    create_del_ledger(json);
+    create_del_ledger(json);// Finally executeds the instruction
 }
 
-setProperties('Delete', 'Test', 'Test-Ledger1', 'Karnataka', 1033, 'Bank Accounts');
+setProperties('Delete', 'Test', 'Test-Ledger1', 'Karnataka', 1033, 'Bank Accounts'); //sets properties. Check params.

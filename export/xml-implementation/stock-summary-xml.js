@@ -55,6 +55,85 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
+  var datetime = new Date();
+  
+  
+  
+ // Beautifying date and mtime outputs on the file 
+  let date, month, year, hour, minute, second;
+
+  //day
+  if(datetime.getDate() < 10)
+  {
+	  date = "0" + datetime.getDate();
+  } 
+
+  else
+  {
+	  date = datetime.getDate();
+  }
+ 
+  // month
+  if(datetime.getMonth() < 10)
+  {
+	  month = "0" + datetime.getMonth();
+  } 
+
+  else
+  {
+	  month = datetime.getMonth();
+  }
+
+  // year
+  if(datetime.getFullYear() < 10)
+  {
+	  year = "0" + datetime.getFullYear();
+  } 
+
+  else
+  {
+	  year = datetime.getFullYear();
+  }
+
+  //Time
+
+  //Hour
+  if(datetime.getHours() < 10)
+  {
+	  hour = "0" + datetime.getHours();
+  } 
+
+  else
+  {
+	  hour = datetime.getHours();
+  }
+
+  // Minute
+
+  if(datetime.getMinutes() < 10)
+  {
+	  minute = "0" + datetime.getMinutes();
+  } 
+
+  else
+  {
+	  minute = datetime.getMinutes();
+  }
+
+  // Seconds
+
+  if(datetime.getSeconds() < 10)
+  {
+	  second = "0" + datetime.getSeconds();
+  } 
+
+  else
+  {
+	  second = datetime.getSeconds();
+  }
+  writeStream.write("\r\n");
+  writeStream.write("==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n");
+  
   writeStream.write("------Items--------         ------------------Incoming---------------------------                                  ----------------Outgoing-------------------      --------------Remaining-------------------\r\n");
   writeStream.write("\r\n");
   writeStream.write("\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n");

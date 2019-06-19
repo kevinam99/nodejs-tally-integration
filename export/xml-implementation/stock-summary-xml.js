@@ -35,13 +35,11 @@ var options = { method: 'POST',
   '                     <DSPSHOWOUTWARDS>YES</DSPSHOWOUTWARDS>'+
   '                     <!-- Show Closing balances = Yes or No -->'+
   '                     <DSPSHOWCLOSING>Yes</DSPSHOWCLOSING>'+
-  '                     <SVEXPORTFORMAT>$$SysName:SDF</SVEXPORTFORMAT>'+
   '                     <!--Method of Information = Grouped or Item-wise-->'+
   '                     <!-- Yes means Grouped-->'+
   '                     <!-- No means Item-wise -->'+
   '                     <ISITEMWISE>yes</ISITEMWISE>'+
-  '                     <SVEXPORTFORMAT>$$SysName:SDF</SVEXPORTFORMAT>'+
-  '                 </STATICVARIABLES>'+
+   '                 </STATICVARIABLES>'+
   '                 <REPORTNAME>Stock Summary</REPORTNAME>'+
   '             </REQUESTDESC>'+
   '         </EXPORTDATA>'+

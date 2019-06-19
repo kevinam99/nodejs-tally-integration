@@ -48,7 +48,7 @@ var options = { method: 'POST',
   '     </BODY>'+
   ' </ENVELOPE>' };
 
-    var writeStream = fs.createWriteStream("Stock-summary-new.txt");
+    //var writeStream = fs.createWriteStream("Stock-summary-new.txt");
     
 
 request(options, function (error, response, body) {
@@ -131,6 +131,36 @@ request(options, function (error, response, body) {
   {
 	  second = datetime.getSeconds();
   }
+
+  // Check whether the output file exists.
+  // If it exists, then open the file in append mode.
+  // If it doesn't exist, open the file in write mode.
+
+let savedFilename = "Stock-summary-new.txt";
+const path = "C:/Users/admin/Desktop/Internships/Edunomics/";
+//const path = '../.././Stock-summary-new.txt'  ---> Returns absent in any case
+console.log("Checking if file exists.");
+try {
+  if (fs.existsSync(path)) {
+	//file exists
+	let fileData = "\r\n"+
+		"==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n"+
+		" ------Items--------         ------------------Incoming---------------------------                                  ----------------Outgoing-------------------      --------------Remaining-------------------\r\n \r\n "+
+		"\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n"+
+		body
+
+	
+	console.log(fileData);
+	console.log(typeof body);
+	fs.appendFileSync(savedFilename , fileData); // Appends if file exists, creates a new file if absent
+	console.log("Appended to file");
+  }
+  else{
+	  console.log("Path Absent");
+  }
+} catch(err) {
+  console.error(err)
+}/*
   writeStream.write("\r\n");
   writeStream.write("==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n");
   
@@ -139,6 +169,6 @@ request(options, function (error, response, body) {
   writeStream.write("\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n");
   writeStream.write(body);
 
-  //writeStream.write("Thank You.");
-  writeStream.end();
+  
+  writeStream.end();*/
 });

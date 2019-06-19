@@ -1,0 +1,27 @@
+<!--Display Master and Voucher statistics.-->
+
+<ENVELOPE>
+    <HEADER>
+    <TALLYREQUEST>Export Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+    <EXPORTDATA>
+    <REQUESTDESC>
+    <STATICVARIABLES>
+    
+    <!--Specify the period here-->
+    <SVFROMDATE>20190501</SVFROMDATE>
+    <SVTODATE>20190630</SVTODATE>
+    
+    <!--Specify the Export format here  HTML or XML or SDF-->
+    <SVEXPORTFORMAT>$$SysName:HTML</SVEXPORTFORMAT>
+    </STATICVARIABLES>
+    
+    <!--Specify the Report Name here-->
+    <REPORTNAME>Statistics</REPORTNAME>
+    
+    </REQUESTDESC>
+    </EXPORTDATA>
+    </BODY>
+    </ENVELOPE>
+    

@@ -145,7 +145,7 @@ try {
 	//file exists
 	let fileData = "\r\n"+
 		"==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n"+
-		" ------Items--------         ------------------Incoming---------------------------                                  ----------------Outgoing-------------------      --------------Remaining-------------------\r\n \r\n "+
+		"------Items--------         -----------------Opening balance----------------       -------------Production--------------     ---------------Outgoing------------      ---------Closing balance-------------------\r\n \r\n "+
 		"\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n"+
 		body
 
@@ -160,7 +160,9 @@ try {
   }
 } catch(err) {
   console.error(err)
-}/*
+}
+
+/*
   writeStream.write("\r\n");
   writeStream.write("==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n");
   

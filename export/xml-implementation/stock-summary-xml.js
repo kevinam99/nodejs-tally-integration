@@ -52,7 +52,8 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  console.log(body);
+ //    console.log(body);
+  
   var datetime = new Date();
   
   
@@ -132,9 +133,11 @@ request(options, function (error, response, body) {
 
   // Check whether the output file exists.
   // If it exists, then open the file in append mode.
+  //https://www.github.com/kevinam99
+  // Devleoped by Kevin Mathew as an intern at Edunomics
   // If it doesn't exist, open the file in write mode.
 
-let savedFilename = "Stock-summary-new.txt";
+let savedFilename = "Stock-summary-"+date+"-"+month+"-"+year+".txt";
 const path = "C:/Users/admin/Desktop/Internships/Edunomics/";
 //const path = '../.././Stock-summary-new.txt'  ---> Returns absent in any case
 console.log("Checking if file exists.");
@@ -143,13 +146,12 @@ try {
 	//file exists
 	let fileData = "\r\n"+
 		"==========================================================================>DATA EXTRACTED ON:  "+ date +" - "+ month +" - "+ year +" , at "+ hour +" : "+ minute +" : "+ second +"<==================================================================================== \r\n"+
-		"------Items--------         -----------------Opening balance----------------       -------------Production--------------     ---------------Outgoing------------      ---------Closing balance-------------------\r\n \r\n "+
-		"\r\n                                     Stock       Rate            Value                                                 Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n"+
+		"------Items--------         -----------------Opening balance----------------  -------------Inwards--------------     ---------------Outgoing------------      ---------Closing balance-------------------\r\n \r\n "+
+		"\r\n                                     Stock       Rate            Value         Stock      Rate            Value         Sold stock    Rate             Value  	  Stock        Rate	       Value\r\n"+
 		body
 
 	
-	console.log(fileData);
-	console.log(typeof body);
+	
 	fs.appendFileSync(savedFilename , fileData); // Appends if file exists, creates a new file if absent
 	console.log("Appended to file");
   }

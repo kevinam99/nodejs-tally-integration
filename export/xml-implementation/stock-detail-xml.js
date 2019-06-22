@@ -133,8 +133,8 @@ try {
   if (fs.existsSync(path)) {
 	//file exist
   let fileData = 
-  				  'Details for ledger: '+ledgerName+' \r\n'+
-                  '--Date--            --Transaction type--   --DEBIT--      --CREDIT--\r\n'+body+'\r\n\r\n\r\n';
+  				  'Details for ledger: '+ ledgerName +' for the period'+ fromDate + 'to '+ todate + ' \r\n'+
+                  '--Date--            --Transaction type--   --DEBIT--      --CREDIT--\r\n'+ body +'\r\n\r\n\r\n';
 
 	
 	

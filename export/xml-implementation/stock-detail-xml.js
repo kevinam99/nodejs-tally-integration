@@ -154,7 +154,7 @@ try {
 
 let ledgers = ['Ram Prakash', 'Purchase', 'Test Company2', 'Test Company'];
 
-
+let fromDate = 20180401, toDate = 20190531;
 for(var i = 0; i < ledgers.length; i++){
-	getSummaryInDetail(20180401, 20190531, ledgers[i]);
+	getSummaryInDetail(fromDate, toDate, ledgers[i]);
 }

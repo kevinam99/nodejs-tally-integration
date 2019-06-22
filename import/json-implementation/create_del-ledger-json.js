@@ -61,4 +61,4 @@ function setProperties(action, company, ledgerName, state, openingBalance, paren
     create_del_ledger(json);// Finally executeds the instruction
 }
 
-setProperties('Delete', 'Test', 'Test-Ledger1', 'Karnataka', 1033, 'Bank Accounts'); //sets properties. Check params.
+setProperties('Create', 'Test2', 'Vijay and Sons', 'Karnataka', 1033, 'Sundry Creditors'); //sets properties. Check params.

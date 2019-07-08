@@ -27,8 +27,9 @@ function getSummaryInDetail(fromDate, toDate, ledgerName)
     '               <REQUESTDESC>'+
         '               <STATICVARIABLES>'+
         '                   <SVEXPORTFORMAT>$$SysName:XML</SVEXPORTFORMAT> '+ 
-        '                     <EXPLODEALLLEVELS>yes</EXPLODEALLLEVELS>'+ 
-        '                     <DSPSHOWTRANS>YES</DSPSHOWTRANS>'+ 
+        '                     <EXPLODEALLLEVELS>YES</EXPLODEALLLEVELS>'+
+        '                     <DSPSHOWOUTWARDS>YES</DSPSHOWOUTWARDS>'+  
+      
         '                     <DSPSHOWALLACCOUNTS>Yes</DSPSHOWALLACCOUNTS>'+     
             '               <!-- Specify the period here -->'+
             '               <SVFROMDATE>'+ fromDate +'</SVFROMDATE>'+
@@ -37,9 +38,10 @@ function getSummaryInDetail(fromDate, toDate, ledgerName)
             '               <DBBILLEXPLODEFLAG>YES</DBBILLEXPLODEFLAG>'+
             '               <!-- Option Show Voucher Numbers also = Yes -->'+
             '               <EXPLODEVNUM>YES</EXPLODEVNUM>'+
+            '               <DSPSHOWTRANS>YES</DSPSHOWTRANS>'+ 
             '               <!-- Specify the Ledger Name here -->'+
             '               <LEDGERNAME>'+ ledgerName +'</LEDGERNAME>'+
-            '               <ISITEMWISE>yes</ISITEMWISE>'+               
+            '               <ISITEMWISE>YES</ISITEMWISE>'+             
         '</STATICVARIABLES>'+
         '               <REPORTNAME>Ledger Vouchers</REPORTNAME>'+
 '                   </REQUESTDESC>'+
@@ -78,7 +80,6 @@ try {
       let transactionID = json.ENVELOPE.DSPEXPLVCHNUMBER[i];
       let transactionType = json.ENVELOPE.DSPVCHTYPE[i];
       let ledger = json.ENVELOPE.DSPVCHLEDACCOUNT[i];
-      let transactionDate = json.ENVELOPE.DSPVCHDATE[i];
       let transaction = "";
       let docRef = ""; 
       let source = "";
@@ -90,12 +91,12 @@ try {
         transaction = "OUT";
         docRef = 'Sale Transaction';
       }
-      else{
+      else if(transactionType == 'Purch' || transactionType == 'Purchase' ||transactionType == 'Pymt'){
         transaction = "IN"
         docRef = 'GRN Transaction';
         source = "Dealer"
       }
-      var fileData = transactionID+","+transaction+","+source+","+destination+","+transactionDate+","+docRef+"\r\n";
+      var fileData = transactionID+","+transaction+","+source+","+destination+","+year+","+month+","+date+","+docRef+"\r\n";
       fs.appendFileSync(savedFilename,fileData); // Appends if file exists, creates a new file if absent
   }
 
@@ -121,82 +122,49 @@ try {
 
 
   // Beautifying date and mtime outputs on the file 
-  let date, month, year, hour, minute, second;
+  let date, month, year;
   var datetime = new Date();
   //day
   if(datetime.getDate() < 10)
   {
     date = "0" + datetime.getDate();
+    date = date - 1;
   } 
 
   else
   {
     date = datetime.getDate();
+    date = date - 1;
   }
  
   // month
   if(datetime.getMonth() < 10)
   {
     month = "0" + datetime.getMonth();
+    if(datetime.getDate() == 1)
+    {
+      month = month - 1
+    }
   } 
 
   else
   {
     month = datetime.getMonth();
+    if(datetime.getDate() == 1)
+    {
+      month = month - 1
+    }
   }
 
   // year
-  if(datetime.getFullYear() < 10)
-  {
-    year = "0" + datetime.getFullYear();
-  } 
-
-  else
-  {
-    year = datetime.getFullYear();
+  year = datetime.getFullYear();
+  if(datetime.getDate() == 1 && datetime.getMonth() == 1){
+    year = year - 1;
   }
-
-  //Time
-
-  //Hour
-  if(datetime.getHours() < 10)
-  {
-    hour = "0" + datetime.getHours();
-  } 
-
-  else
-  {
-    hour = datetime.getHours();
-  }
-
-  // Minute
-
-  if(datetime.getMinutes() < 10)
-  {
-    minute = "0" + datetime.getMinutes();
-  } 
-
-  else
-  {
-    minute = datetime.getMinutes();
-  }
-
-  // Seconds
-
-  if(datetime.getSeconds() < 10)
-  {
-    second = "0" + datetime.getSeconds();
-  } 
-
-  else
-  {
-    second = datetime.getSeconds();
-  }
-
 
 // Main
 let fromDate = 20180401, toDate = 20190901;
-let fields = 'Transaction ID, Transaction Type (In/Out/Return), Source, Destination, Transaction Date, Document Ref\r\n';
+let fields = 'Transaction ID, Transaction Type (In/Out/Return), Source, Destination, Year, Month, Date, Document Ref\r\n';
 let ledgers = ['Purchase', 'Sales', 'Mr Nadeem Khan(Cus)', 'M/S X Mobile Words (Sup)'];
 fs.appendFileSync("Stock-detail-"+date+"-"+month+"-"+year+".csv", fields);
 const fieldsWritten = true;

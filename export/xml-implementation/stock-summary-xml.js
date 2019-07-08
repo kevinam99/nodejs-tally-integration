@@ -64,7 +64,7 @@ request(options, function (error, response, body) {
   
   
  // Beautifying date and mtime outputs on the file 
-  let date, month, year, hour, minute, second;
+  let date, month, year;
 
   //day
   if(datetime.getDate() < 10)
@@ -100,55 +100,13 @@ request(options, function (error, response, body) {
   }
 
   // year
-  if(datetime.getFullYear() < 10)
-  {
-    year = "0" + datetime.getFullYear();
-   
-  } 
-
-  else
-  {
+  
     year = datetime.getFullYear();
-   
-  }
+    if(datetime.getDate() == 1 && datetime.getMonth() == 1){
+      year = year - 1;
+    }
 
-  //Time
-
-  //Hour
-  if(datetime.getHours() < 10)
-  {
-	  hour = "0" + datetime.getHours();
-  } 
-
-  else
-  {
-	  hour = datetime.getHours();
-  }
-
-  // Minute
-
-  if(datetime.getMinutes() < 10)
-  {
-	  minute = "0" + datetime.getMinutes();
-  } 
-
-  else
-  {
-	  minute = datetime.getMinutes();
-  }
-
-  // Seconds
-
-  if(datetime.getSeconds() < 10)
-  {
-	  second = "0" + datetime.getSeconds();
-  } 
-
-  else
-  {
-	  second = datetime.getSeconds();
-  }
-
+  
   // Check whether the output file exists.
   // If it exists, then open the file in append mode.
   //https://www.github.com/kevinam99
@@ -159,7 +117,7 @@ let savedFilename = "Stock-summary-"+date+"-"+month+"-"+year+".csv";
 const path = "C:/Users/admin/Desktop/Internships/Edunomics/";
 
   //const path = '../.././Stock-summary-new.txt'  ---> Returns absent in any case
-let headings = "SKU, Report Year, Report Month, Report Day,In Ouantity, Out Quantity, Closing Quantity \r\n";
+let headings = "SKU, Stock Location, Report Year, Report Month, Report Day,In Ouantity, Out Quantity, Closing Quantity \r\n";
 fs.appendFileSync(savedFilename, headings);
 var json;
 try {
@@ -171,11 +129,12 @@ try {
      var prodList = result.ENVELOPE.DSPACCNAME.length;
      for(var i = 0; i < prodList; i++){
        var prodName = JSON.stringify(result.ENVELOPE.DSPACCNAME[i].DSPDISPNAME[0]);
+       var stockLocation = "Godown";
        var inQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKIN[0].DSPINQTY);
        var outQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKOUT[0].DSPOUTQTY);
        var clsQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKCL[0].DSPCLQTY);
        
-       var values =  prodName + "," + year + ","+ month + ","+ date + ","+ inQty + ","+ outQty + ","+clsQty+ "\r\n";
+       var values =  prodName + "," + stockLocation + "," + year + ","+ month + ","+ date + ","+ inQty + ","+ outQty + ","+clsQty+ "\r\n";
       fs.appendFileSync(savedFilename , values); // Appends if file exists, creates a new file if absent
      }
      

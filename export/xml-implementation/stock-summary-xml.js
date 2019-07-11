@@ -2,7 +2,11 @@ var request = require("request");
 var fs = require("fs");
 const parseString = require('xml2js').parseString;
 const convert = require("xml-js");
+var Excel = require('exceljs');
 
+var path = require('path');
+var filePath = path.resolve(`${__dirname}/../../configs.csv`);
+var jsonObjFinal;
 
 var options = { method: 'POST',
   url: 'http://localhost:9002',
@@ -29,7 +33,7 @@ var options = { method: 'POST',
   '                     <!-- Format = Detailed or Condensed -->'+
   '                     <!-- Yes means Detailed -->'+
   '                     <!-- No means Condensed -->'+
-  '                     <EXPLODEFLAG>Yes</EXPLODEFLAG>'+
+ 
   '                     <!-- Show ALL Accts (incl Empty A/cs) = Yes or No-->'+
   '                     <DSPSHOWALLACCOUNTS>No</DSPSHOWALLACCOUNTS>'+
   '                     <!-- Show Opening balances = Yes or No -->'+
@@ -51,8 +55,7 @@ var options = { method: 'POST',
   '     </BODY>'+
   ' </ENVELOPE>' };
 
-    //var writeStream = fs.createWriteStream("Stock-summary-new.txt");
-    
+
 
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
@@ -119,22 +122,39 @@ const path = "C:/Users/admin/Desktop/Internships/Edunomics/";
   //const path = '../.././Stock-summary-new.txt'  ---> Returns absent in any case
 let headings = "SKU, Stock Location, Report Year, Report Month, Report Day,In Ouantity, Out Quantity, Closing Quantity \r\n";
 fs.appendFileSync(savedFilename, headings);
-var json;
+let json;
 try {
  if (fs.existsSync(path)) {
  //file exists
  let xml = body;
  parseString(xml, function (err, result) {
    //  console.dir(result);
-     var prodList = result.ENVELOPE.DSPACCNAME.length;
+   
+   var csvjson = require('csvjson');
+   var data = fs.readFileSync(filePath, { encoding : 'utf8'});
+   var options = {
+     delimiter : ',', // optional
+     quote     : '"' // optional
+   };
+
+   json = csvjson.toObject(data, options);
+   var prodList = result.ENVELOPE.DSPACCNAME.length;
      for(var i = 0; i < prodList; i++){
-       var prodName = JSON.stringify(result.ENVELOPE.DSPACCNAME[i].DSPDISPNAME[0]);
-       var stockLocation = "Godown";
-       var inQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKIN[0].DSPINQTY);
-       var outQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKOUT[0].DSPOUTQTY);
-       var clsQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKCL[0].DSPCLQTY);
-       
-       var values =  prodName + "," + stockLocation + "," + year + ","+ month + ","+ date + ","+ inQty + ","+ outQty + ","+clsQty+ "\r\n";
+       let prodName = JSON.stringify(result.ENVELOPE.DSPACCNAME[i].DSPDISPNAME[0]);
+       prodName = JSON.parse(prodName);
+       let stockLocation = "Godown";
+       let inQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKIN[0].DSPINQTY);
+       let outQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKOUT[0].DSPOUTQTY);
+       let clsQty = JSON.stringify(result.ENVELOPE.DSPSTKINFO[i].DSPSTKCL[0].DSPCLQTY);
+       let sku;
+       for(let j = 0; j < json.length; j++)
+       {
+         if(json[j].Retailer_name == prodName)
+         {
+            sku = json[j].SKU;
+         }
+       }
+       let values =  sku + "," + stockLocation + "," + year + ","+ month + ","+ date + ","+ inQty + ","+ outQty + ","+clsQty+ "\r\n";
       fs.appendFileSync(savedFilename , values); // Appends if file exists, creates a new file if absent
      }
      

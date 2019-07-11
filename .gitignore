@@ -5,7 +5,7 @@ testprogs/*
 *.exe
 app.js
 *.txt
-node_modules/
+node_modules/*
 *.csv
 *.json
 *.xml

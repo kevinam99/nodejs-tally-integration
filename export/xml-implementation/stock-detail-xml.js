@@ -1,14 +1,15 @@
 /**********************
- * THIS SCRIPT GIVES THE THE DETAILED SUMMARY OF LEDGER VOUCHERS GIVEN A LEDGER NAME 
- * AND A SPECIFIC TIME PERIOD
+ * THIS SCRIPT GIVES THE THE DETAILED SUMMARY OF LEDGER VOUCHERS GIVEN A 
+ * LEDGER NAME AND A SPECIFIC TIME PERIOD
  * 
  * 
- */
+ * 
+ ***********************/
 
 const request = require("request");
 const fs = require("fs");
 const parseString = require('xml2js').parseString;
-
+const path = require("path");
 function getSummaryInDetail(fromDate, toDate, ledgerName)
 {
     var options = { method: 'POST',
@@ -84,19 +85,22 @@ try {
       let docRef = ""; 
       let source = "";
       let destination = ""
-      if(transactionType == 'Sale')
+      
+
+      if(transactionType == 'Sale' || transactionType == "Rcpt")
       {
-        
+        source = "Godown";
         destination = ledger;
         transaction = "OUT";
         docRef = 'Sale Transaction';
       }
-      else if(transactionType == 'Purch' || transactionType == 'Purchase' ||transactionType == 'Pymt'){
+      else if(transactionType == 'Purc' || transactionType == 'Purchase' || transactionType == 'Pymt'){
         transaction = "IN"
         docRef = 'GRN Transaction';
-        source = "Dealer"
+        source = ledger;
+        destination = "Godown";
       }
-      var fileData = transactionID+","+transaction+","+source+","+destination+","+year+","+month+","+date+","+docRef+"\r\n";
+      var fileData = transactionID+","+transaction+ "," +source+","+destination+","+year+","+month+","+date+","+docRef+"\r\n";
       fs.appendFileSync(savedFilename,fileData); // Appends if file exists, creates a new file if absent
   }
 

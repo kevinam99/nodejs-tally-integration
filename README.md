@@ -7,3 +7,6 @@ Repository containing all the programs written during my internship with Cidroy.
 
 Clone the repo, run ``` npm install```, and you're good to go!
 Documentation available at: https://goo.gl/JRA84A
+
+The customisable software is now available as a gig on [Fiverr](https://www.fiverr.com/s2/20eb7a4d8d)
+Support me and my work by buying this project.
